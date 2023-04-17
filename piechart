@@ -1,0 +1,132 @@
+import seaborn as sns
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('Luxury_Products_Apparel_Data.csv')
+
+data_dict = {col: df[col].nunique() for col in df.columns}
+
+category_counts = df['Category'].value_counts()
+category_labels = category_counts.index
+
+plt.figure(figsize=(10, 6))  # Set the figure size (width, height)
+sns.barplot(x=category_labels, y=category_counts)
+
+plt.xlabel('Category')  # Set x-axis label
+plt.ylabel('Count')  # Set y-axis label
+plt.title('Counts of Luxury Apparel Product Categories')  # Set chart title
+
+plt.xticks(rotation=45, ha='right')  # Rotate x-axis labels to avoid overlapping
+
+for i, count in enumerate(category_counts):
+    plt.text(i, count + 5, str(count), ha='center', va='bottom', fontsize=12)
+
+plt.tight_layout()  # Adjust the layout to fit the rotated labels
+plt.savefig('category_counts.jpg', dpi=300)  # Save the figure as a jpg file with 300 dpi
+plt.show()  # Display the chart
+
+print('Done!')
+
+#####################################
+
+import seaborn as sns
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('Luxury_Products_Apparel_Data.csv')
+
+data_dict = {col: df[col].nunique() for col in df.columns}
+
+category_counts = df['Category'].value_counts(normalize=True) * 100
+category_labels = category_counts.index
+
+plt.figure(figsize=(8, 6))  # Set the figure size (width, height)
+bottom = 0
+
+for i, (label, count) in enumerate(category_counts.items()):
+    plt.bar(0, count, bottom=bottom, label=label)
+    plt.text(0, bottom + count/2, f'{count:.1f}%', ha='center', va='center', fontsize=12)
+    bottom += count
+
+plt.xlabel('Categories')  # Set x-axis label
+plt.ylabel('Percentage')  # Set y-axis label
+plt.title('Percentage Distribution of Luxury Apparel Product Categories')  # Set chart title
+plt.xticks([])  # Hide x-axis ticks
+plt.legend(title='Category', loc='upper left', bbox_to_anchor=(1, 1))  # Display the legend outside the plot
+
+plt.tight_layout()  # Adjust the layout to fit the labels
+plt.savefig('category_percentage_stacked_bar.jpg', dpi=300)  # Save the figure as a jpg file with 300 dpi
+plt.show()  # Display the chart
+#save the chart as a jpg file with 300 dpi
+print('Done!')
+
+################
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Satisfaction scores and categories
+satisfaction_scores = [3, 5, 7, 9]
+categories = ['Category A', 'Category B', 'Category C', 'Category D']
+
+# Custom symbol
+symbol = '★'
+
+# Create a blank canvas
+fig, ax = plt.subplots()
+
+# Loop through categories and scores, and add symbols to the chart
+for idx, score in enumerate(satisfaction_scores):
+    filled = symbol * score
+    unfilled = symbol * (10 - score)
+    ax.text(0, idx, filled, fontsize=12, fontweight='bold', va='center')
+    ax.text(score, idx, unfilled, fontsize=12, color='silver', fontweight='bold', va='center')
+
+# Set y-axis labels and x-axis range
+ax.set_yticks(np.arange(len(categories)))
+ax.set_yticklabels(categories)
+ax.set_xticks([])
+ax.set_xlim(0, 10)
+
+# Add labels and title
+ax.set_xlabel('Satisfaction score (out of 10)')
+ax.set_title('Satisfaction Chart with Symbols')
+
+# Remove spines
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+ax.spines['bottom'].set_visible(False)
+ax.spines['left'].set_visible(False)
+
+# Show the chart
+plt.show()
+
+
+print('Done!')
+
+########################################
+import seaborn as sns
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('Luxury_Products_Apparel_Data.csv')
+
+data_dict = {col: df[col].nunique() for col in df.columns}
+
+category_counts = df['Category'].value_counts(normalize=True) * 100
+category_labels = category_counts.index
+
+plt.figure(figsize=(8, 6))  # Set the figure size (width, height)
+
+# Create a pie chart
+plt.pie(category_counts, labels=category_labels, autopct='%1.1f%%', startangle=90)
+
+plt.axis('equal')  # Make the pie chart circular
+plt.title('Percentage Distribution of Luxury Apparel Product Categories')  # Set chart title
+
+# Save the figure as a jpg file with 300 dpi
+plt.savefig('category_percentage_pie_chart.jpg', dpi=300)
+
+plt.show()  # Display the chart
+print('Done!')
+
+##############
