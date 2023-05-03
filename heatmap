@@ -1,0 +1,47 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+
+# Example DataFrame
+data = np.random.randint(0, 100, (5, 5))
+columns = [f'Col{i+1}' for i in range(5)]
+index = [f'Row{i+1}' for i in range(5)]
+df = pd.DataFrame(data, columns=columns, index=index)
+
+def plot_heatmap(df):
+    # Create a custom colormap
+    cmap = sns.diverging_palette(10, 133, as_cmap=True)
+
+    # Plot the heatmap using seaborn
+    fig, ax = plt.subplots(figsize=(11, 11))
+    sns.heatmap(df, cmap=cmap, vmin=0, vmax=100, annot=True, fmt=".0f", annot_kws={'fontsize': 10}, cbar=False, ax=ax)
+
+    # Customize plot
+    ax.xaxis.tick_top()
+    ax.xaxis.set_ticks_position('both')
+    ax.yaxis.set_ticks_position('both')
+    ax.set_aspect('equal')
+
+    # Add random numbers in the upper right corner of each box
+    for i in range(len(df.columns)):
+        for j in range(len(df.index)):
+            rand_num = np.random.randint(1, 10)
+            ax.text(i+0.7, j+0.2, rand_num, ha='center', va='center', fontsize=10)
+
+    # Put x-ticks and y-ticks in boxes
+    ax.tick_params(axis='both', which='both', length=0, labelsize=10, pad=2)
+    for tick in ax.get_xticklabels() + ax.get_yticklabels():
+        tick.set_bbox(dict(facecolor='white', edgecolor='black', alpha=0.6, linewidth=0.5, pad=0))
+
+    # Save plot as an image
+    plt.savefig('heatmap_equal_size_ticks.png')
+
+    # Show plot
+    plt.show()
+
+# Call the function to plot the heatmap
+plot_heatmap(df)
+
+
+print('Done')
